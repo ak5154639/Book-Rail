@@ -369,7 +369,7 @@ def cancel():
         tickets = db.execute("SELECT * FROM tickets WHERE userid=? AND status='booked'", user)
         return render_template("cancel.html", tickets=tickets)
     else:
-        tickets = db.execute("SELECT * FROM tickets WHERE userid=? AND status='booked'", user)
+        tickets = db.execute("SELECT * FROM tickets WHERE userid=? AND status='booked' AND journey_date > DATE('now')", user)
         return render_template("cancel.html", tickets=tickets)
 
 
@@ -479,5 +479,5 @@ def print():
 
 
     else:
-        tickets = db.execute("SELECT * FROM tickets WHERE userid=? AND status='booked'", user)
+        tickets = db.execute("SELECT * FROM tickets WHERE userid=? AND status='booked' AND journey_date > DATE('now')", user)
         return render_template("print.html", tickets=tickets)
