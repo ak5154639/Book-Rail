@@ -7,8 +7,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import random
 
 
-# To make pdf of ticket
-from weasyprint import HTML
 
 # For time representation (HH:MMM:SS) => ()
 from datetime import datetime, timedelta
@@ -462,20 +460,7 @@ def print():
         username = db.execute("SELECT username FROM users WHERE id=?",user)[0]['username']
 
         # html page to show ticket
-        html = render_template("ticket.html", id = ticket, ticket_data=tickets, stations=stations, user=username)
-
-
-        # Ticket PDF
-        pdf = HTML(string=html).write_pdf()
-
-        # setting headers to the response
-        response = make_response(pdf)
-        response.headers['Content-Type'] = 'application/pdf'
-        response.headers['Content-Disposition'] = f"inline; filename=Ticket-{ticket}:{tickets['train_no']} | {tickets['board']}->{tickets['deboard']}.pdf"
-
-        # returning response with Ticket in PDF form
-        return response
-
+        return render_template("ticket.html", id = ticket, ticket_data=tickets, stations=stations, user=username)
 
 
     else:
