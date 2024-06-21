@@ -45,7 +45,7 @@
         {% if trains %}
         <div class="mb-3">
             <select autofocus required class="form-control selectpicker mx-auto w-25" id="train" name="train" placeholder="Destination" type="text" data-live-search="true">
-                <option selected disabled>SELECT DESTINATION STATION</option>
+                <option selected disabled>SELECT TRAIN</option>
                 {% for train in trains %}
                 <option value="{{ train['no'] }}" data-tokens="{{ train['no'] }}{{ train['name'] }}">{{ train['no'] }} : {{ train['name'] }}</option>
                 {% endfor %}
@@ -58,6 +58,7 @@
             <label class="form-label mx-auto w25">Journey Date</label><input required name="date" id="date" type="date" class="form-control mx-auto w-25" max="{{ allowedDate[0] }}" min="{{ allowedDate[1] }}" placeholder="Date of Journey">
         </div>
         <button class="btn btn-primary" type="submit">Book Ticket</button>
+        <a href="/book" class="btn btn-danger">Clear Form</a>
 
         <!-- At get request we are not getting more data as list of trains is also more -->
         {% else %}

@@ -66,8 +66,18 @@ def book():
             flash("Select Destination Station")
             return render_template("book.html", stations=stations)
 
+        # If source and destination are same
+        if src == dest:
+            flash("Same source and Destination")
+            return render_template("book.html", stations=stations)
+
         # If train not selected
         trains = db.execute("SELECT src.train_no AS no, src.train_name AS name FROM ( SELECT train_no, train_name, departure_time, station_name, distance FROM schedule WHERE station_code=? ) src JOIN ( SELECT train_no, train_name, arrival_time, station_name, distance FROM schedule WHERE station_code=? ) dest ON dest.train_no=src.train_no AND dest.distance-src.distance > 0; ",src,dest)
+        if not trains:
+            # If there is not any trains running between given source and destinations
+
+            flash("No trains running between selected source and destination")
+            return render_template("book.html", stations=stations)
         if not train:
             # Getting trains from src->dest
 
